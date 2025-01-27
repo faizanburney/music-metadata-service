@@ -38,15 +38,19 @@ This project is a backend service designed to manage music metadata for a stream
 
 2. Build the project:
    ```
-   gradle clean build
+   .\gradlew clean build
    ```
 
 3. Run the application:
    ```
-   gradle bootRun
+   .\gradlew bootRun
    ```
 
-4. Access the API at `http://localhost:8080/api/v1`.
+4. ## API Documentation
+
+The API documentation for this service is available via OpenAPI. You can access the interactive API documentation at the following URL:
+
+[OpenAPI Documentation](http://localhost:8080/swagger-ui.html)
 
 ## Why MongoDB Was Considered
 

@@ -15,6 +15,9 @@ class ArtistServiceTest {
   private var artistService: ArtistService = _
 
   @Autowired
+  private var trackService: TrackService = _
+
+  @Autowired
   private var artistRepository: ArtistRepository = _
 
   @Test
@@ -47,6 +50,7 @@ class ArtistServiceTest {
 
   @Test
   def testDeleteAllArtists(): Unit = {
+    trackService.deleteAllTracks();
     artistService.deleteAllArtists()
     assertEquals(0, artistRepository.count())
   }

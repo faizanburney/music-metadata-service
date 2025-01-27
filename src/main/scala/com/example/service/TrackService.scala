@@ -18,4 +18,8 @@ class TrackService(val trackRepository: TrackRepository) {
   def getTracksByArtist(artistId: Long): List[Track] = {
     trackRepository.findByArtistId(artistId)
   }
+
+  def deleteAllTracks(): Unit = {
+    trackRepository.deleteAll()
+  }
 }
