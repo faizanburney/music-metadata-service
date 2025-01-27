@@ -16,7 +16,7 @@ This project is a backend service designed to manage music metadata for a stream
 ## Technology Stack
 
 - **Programming Language:** Scala
-- **Framework:** Spring WebFlux (Reactive Programming)
+- **Framework:** Spring Boot
 - **Build Tool:** Gradle
 - **Database:** In-memory H2 Database (for local development and testing)
 - **Testing:** ScalaTest

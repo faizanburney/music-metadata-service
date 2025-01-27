@@ -1,6 +1,6 @@
 package com.example.controller
 
-import com.example.model.Artist
+import com.example.model.{Artist, Track}
 import com.example.service.ArtistService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -34,5 +34,21 @@ class ArtistController @Autowired()(val artistService: ArtistService) {
   def deleteAllArtists(): ResponseEntity[Void] = {
     artistService.deleteAllArtists()
     ResponseEntity.noContent().build()
+  }
+
+  @GetMapping(Array("/artistOfTheDay"))
+  def getArtistOfTheDay: ResponseEntity[Optional[Artist]] = {
+    val artistOfTheDay = artistService.getArtistOfTheDay
+    ResponseEntity.ok(artistOfTheDay)
+  }
+
+  @PostMapping(Array("/{artistId}/tracks"))
+  def addTrackToArtist(@PathVariable artistId: Long, @RequestBody track: Track): ResponseEntity[Track] = {
+    val savedTrack = artistService.addTrackToArtist(artistId, track)
+    if (savedTrack.isDefined) {
+      ResponseEntity.ok(savedTrack.get)
+    } else {
+      ResponseEntity.notFound().build()
+    }
   }
 }

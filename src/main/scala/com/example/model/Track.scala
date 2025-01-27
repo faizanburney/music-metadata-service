@@ -1,6 +1,6 @@
 package com.example.model
 
-import jakarta.persistence.{Entity, GeneratedValue, GenerationType, Id, ManyToOne}
+import jakarta.persistence._
 
 @Entity
 class Track {
@@ -11,7 +11,8 @@ class Track {
   private var genre: String = _
   private var length: Int = 0
   @ManyToOne
-  private var artist: Artist = _
+  @JoinColumn(name = "artist_id")
+  var artist: Artist = _
 
   def getId: Long = id
   def setId(id: Long): Unit = {

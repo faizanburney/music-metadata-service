@@ -1,7 +1,7 @@
 package com.example.service
 
-import com.example.model.Artist
-import com.example.repository.ArtistRepository
+import com.example.model.{Artist, Track}
+import com.example.repository.{ArtistRepository, TrackRepository}
 import org.springframework.stereotype.Service
 
 import java.util.Optional
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional
-class ArtistService(private val artistRepository: ArtistRepository) {
+class ArtistService(private val artistRepository: ArtistRepository, val trackRepository: TrackRepository) {
 
   def addArtist(artist: Artist): Artist = {
     artistRepository.save(artist)
@@ -39,6 +39,17 @@ class ArtistService(private val artistRepository: ArtistRepository) {
       val daysSinceEpoch = LocalDate.now().toEpochDay
       val artistIndex = (daysSinceEpoch % artistCount).toInt
       artistRepository.findByIndex(artistIndex)
+    }
+  }
+
+  def addTrackToArtist(artistId: Long, track: Track): Option[Track] = {
+    val artistOpt = artistRepository.findById(artistId)
+    if (artistOpt.isPresent) {
+      val artist = artistOpt.get
+      track.setArtist(artist)
+      Some(trackRepository.save(track))
+    } else {
+      None
     }
   }
 }
