@@ -1,5 +1,6 @@
 package com.example.service
 
+import com.example.dto.ArtistCreateRequest
 import com.example.model.Artist
 import com.example.repository.ArtistRepository
 import org.junit.jupiter.api.Assertions._
@@ -22,9 +23,9 @@ class ArtistServiceTest {
 
   @Test
   def testAddArtist(): Unit = {
-    val artist = new Artist()
-    artist.setName("Test Artist")
-    val savedArtist = artistService.addArtist(artist)
+    val artistRequest = new ArtistCreateRequest()
+    artistRequest.setName("Test Artist")
+    val savedArtist = artistService.addArtist(artistRequest)
     assertNotNull(savedArtist.getId)
   }
 
@@ -50,7 +51,7 @@ class ArtistServiceTest {
 
   @Test
   def testDeleteAllArtists(): Unit = {
-    trackService.deleteAllTracks();
+    trackService.deleteAllTracks()
     artistService.deleteAllArtists()
     assertEquals(0, artistRepository.count())
   }

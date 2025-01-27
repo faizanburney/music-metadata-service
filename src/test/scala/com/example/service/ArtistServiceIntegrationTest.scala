@@ -1,5 +1,6 @@
 package com.example.service
 
+import com.example.dto.{ArtistCreateRequest, TrackCreateRequest}
 import com.example.model.{Artist, Track}
 import com.example.repository.ArtistRepository
 import org.junit.jupiter.api.Assertions._
@@ -18,9 +19,9 @@ class ArtistServiceIntegrationTest {
 
   @Test
   def testAddArtist(): Unit = {
-    val artist = new Artist()
-    artist.setName("Test Artist")
-    val savedArtist = artistService.addArtist(artist)
+    val artistRequest = new ArtistCreateRequest()
+    artistRequest.setName("Test Artist")
+    val savedArtist = artistService.addArtist(artistRequest)
     assertNotNull(savedArtist.getId)
   }
 
@@ -53,17 +54,17 @@ class ArtistServiceIntegrationTest {
   @Test
   def testGetArtistOfTheDay(): Unit = {
     // Add multiple artists to the repository
-    val artist1 = new Artist()
+    val artist1 = new ArtistCreateRequest()
     artist1.setName("Artist 1")
-    artistRepository.save(artist1)
+    artistService.addArtist(artist1)
 
-    val artist2 = new Artist()
+    val artist2 = new ArtistCreateRequest()
     artist2.setName("Artist 2")
-    artistRepository.save(artist2)
+    artistService.addArtist(artist2)
 
-    val artist3 = new Artist()
+    val artist3 = new ArtistCreateRequest()
     artist3.setName("Artist 3")
-    artistRepository.save(artist3)
+    artistService.addArtist(artist3)
 
     // Get the artist of the day
     val artistOfTheDay = artistService.getArtistOfTheDay
@@ -82,14 +83,14 @@ class ArtistServiceIntegrationTest {
     artist.setName("Test Artist")
     val savedArtist = artistRepository.save(artist)
 
-    // Create a new track
-    val track = new Track()
-    track.setTitle("Test Track")
-    track.setGenre("Test Genre")
-    track.setLength(300)
+    // Create a new track request
+    val trackRequest = new TrackCreateRequest()
+    trackRequest.setTitle("Test Track")
+    trackRequest.setGenre("Test Genre")
+    trackRequest.setLength(300)
 
     // Add the track to the artist
-    val savedTrack = artistService.addTrackToArtist(savedArtist.getId, track)
+    val savedTrack = artistService.addTrackToArtist(savedArtist.getId, trackRequest)
 
     // Verify that the track was added successfully
     assertTrue(savedTrack.isDefined)
@@ -99,8 +100,4 @@ class ArtistServiceIntegrationTest {
     assertEquals(300, savedTrack.get.getLength)
     assertEquals(savedArtist.getId, savedTrack.get.getArtist.getId)
   }
-
-
-
-
 }
